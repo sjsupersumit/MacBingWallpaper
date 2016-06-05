@@ -5,10 +5,13 @@ import requests
 import json
 import datetime
 import subprocess
+import os
 from appscript import *
 
 
-BING_URL =  "http://www.bing.com"
+BING_URL = "http://www.bing.com"
+BASE_DIR = "/Users/sumit.jha/Desktop/wallpaper"
+
 
 def main():
     file_path = download_image()
@@ -28,12 +31,14 @@ def download_image():
     response = requests.get(base_url, params=params)
     if response.status_code == 200:
         data = json.loads(response.content)
-        image_url = BING_URL + data['images'][randint(0, index-1)]['url']
+        image_url = BING_URL + data['images'][0]['url']
         print image_url
         response = requests.get(image_url)
         if response.status_code == 200:
             date_time_str = datetime.datetime.now().strftime("%I:%M%p%s on %B %d, %Y")
-            file_path = "/Users/sumit.jha/Desktop/wallpaper/wallpaper" + date_time_str + ".jpg"
+            if not os.path.exists(BASE_DIR) :
+                os.makedirs(BASE_DIR)
+            file_path = "/Users/sumit.jha/Desktop/wallpaper/wp" + date_time_str + ".jpg"
             f = open(file_path, 'wb')
             f.write(response.content)
             f.close()
