@@ -55,9 +55,10 @@ def download_from_flickr():
     dir = os.path.dirname(__file__)
     config.read(os.path.join(dir, 'settings.conf'))
     key = config.get('Flickr', 'API_KEY')
+    tags = config.get('Tags','TAGS_LIST')
     params = {
         'api_key': key,
-        'tags': ['bliss','outdoors', 'beautiful', 'wallpaper', 'hd', 'motivation', 'inspiration', 'exotic'],
+        'tags': tags,
         'tag_mode': 'any',
         'safe_search': '2',
         'content_type': '1',
